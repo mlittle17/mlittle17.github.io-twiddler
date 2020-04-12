@@ -17,9 +17,14 @@ const users = Object.keys(streams.users);
 
 // Utility function for adding tweets to our data structures
 const addTweet = (newTweet) => {
+
   const username = newTweet.user;
+  if(!streams.users[username]) {
+    streams.users[username] = [];
+  }
   streams.users[username].push(newTweet);
   streams.home.push(newTweet);
+  
 };
 
 // Utility function
@@ -52,6 +57,7 @@ const generateRandomTweet = () => {
     message: randomMessage(),
     created_at: new Date(),
   };
+
   addTweet(tweet);
 };
 
@@ -77,6 +83,7 @@ const writeTweet = (message) => {
   const tweet = {
     user: visitor,
     message: message,
+    created_at: new Date() // added this since the functions are looking for it
   };
   addTweet(tweet);
 };
